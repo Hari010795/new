@@ -1,0 +1,512 @@
+<form class="cls" [formGroup]="weatherSearchForm" (ngSubmit)="citycall(weatherSearchForm.value)">
+
+  <div class=" cls">
+    <input class="form-control  Searchframe SearchBox" type="text" id="weatherLocation"
+      aria-describedby="weatherLocation" placeholder="Please input a Location" formControlName="location" />
+  </div>
+  <div style="display: flex;flex-direction: row; margin-left: 10%;">
+    <div style="width: auto; height: 70px;margin-top: 10px; border: 1px solid white;background-color: white; font-size: medium;
+     font-weight: 600;">
+      <p class="C">
+        The<br>
+        Weather<br>
+        Channel
+      </p>
+    </div>
+
+    <div style="display: flex; padding-top: 40px;padding-left: 20px;">
+      An IBM Business
+    </div>
+    <div style="height: 35px;width: 2px; background-color: white; margin-left: 20px;margin-top: 35px;"></div>
+    <div style="margin-top: 35px;">
+      <a mat-button href="https://timesofindia.indiatimes.com/" class="times" target="_blank"
+        style="padding-left: 20px;">
+        THE TIMES OF INDIA
+
+      </a>
+    </div>
+    <img src="https://tpc.googlesyndication.com/simgad/919714800375555517?" 
+    style="padding-left: 50px; padding-top: 15px;">
+
+  </div>
+</form>
+<mat-tab-group class="cls" mat-align-tabs="center">
+  <mat-tab label="Day1" class="cls1">
+    <mat-toolbar class="topmenu" style="border-radius: 10px 10px 0px 0px;">
+      <mat-toolbar-row>
+        <span class="date">
+          <h2 style="margin-top: 15px; font-weight: 600; font-size: larger;   ">
+            Hourly Weather</h2>
+          <span style="font-weight: 400; font-size: medium;padding-top: 20px;">  - {{this.location}}, {{this.region}}</span> 
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+    <mat-toolbar class="topmenu">
+      <span class="date">
+        {{this.dataSource11 | json |date}}
+
+      </span>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+
+    <div class="row pt-5">
+      <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8 align">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Date/Time</th>
+          <td mat-cell *matCellDef="let element">{{element.time |date:'hh:mm' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="temperature">
+          <th mat-header-cell *matHeaderCellDef>Temperature</th>
+          <td mat-cell *matCellDef="let element">{{element.temp_c}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>Sunny/cloudy</th>
+          <td mat-cell *matCellDef="let element">
+            <div style="display: inline-flex; ">
+            <img [src]="element.condition.icon"><span style="padding-top: 22px ;">{{element.condition.text}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rain">
+          <th mat-header-cell *matHeaderCellDef>rain</th>
+          <td mat-cell *matCellDef="let element">{{element.chance_of_rain}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wind">
+          <th mat-header-cell *matHeaderCellDef>wind</th>
+          <td mat-cell *matCellDef="let element">{{element.wind_dir}}{{element.wind_kph}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+              <table class="detail-table">
+                <br />
+                <tr>
+                  <th>Feels Like</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+
+                <tr>
+                  <td>{{ element.feelslike_c }}℃</td>
+                  <td>{{ element.wind_dir }} {{ element.wind_kph }} km/h</td>
+                  <td>{{ element.humidity }}%</td>
+                </tr>
+                <tr>
+                  <th>UV Index</th>
+                  <th>Colud Cover</th>
+                  <th>Rain Amound</th>
+                </tr>
+                <tr>
+                  <td>{{ element.uv }} of 10</td>
+                  <td>{{ element.cloud }}%</td>
+                  <td>{{ element.will_it_rain }} cm</td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+          [class.example-expanded-row]="element.expanded" (click)="toggleRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+        </tr>
+
+
+      </table>
+    </div>
+  </mat-tab>
+
+
+  <mat-tab label="Day 2">
+    <mat-toolbar class="topmenu" style="border-radius: 10px 10px 0px 0px;">
+      <mat-toolbar-row>
+        <span class="date">
+          <h2 style="margin-top: 15px; font-weight: 600; font-size: larger;   ">
+            Hourly Weather </h2>
+         <span style="font-weight: 400; font-size: medium;padding-top: 20px;"> - {{this.location}} , {{this.region}}</span> 
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+    <mat-toolbar class="topmenu">
+      <span class="date">
+        {{this.dataSource22 | json |date}}
+
+      </span>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+
+    <div class="row">
+      <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 align">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Date/time</th>
+          <td mat-cell *matCellDef="let element">{{element.time }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="temperature">
+          <th mat-header-cell *matHeaderCellDef>Temperature</th>
+          <td mat-cell *matCellDef="let element">{{element.temp_c}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>Sunny/Cloudy</th>
+          <td mat-cell *matCellDef="let element">
+            <div style="display: inline-flex; ">
+              <img [src]="element.condition.icon"><span style="padding-top: 22px ;">{{element.condition.text}}</span>
+              </div>
+        </ng-container>
+
+        <ng-container matColumnDef="rain">
+          <th mat-header-cell *matHeaderCellDef>rain</th>
+          <td mat-cell *matCellDef="let element">{{element.chance_of_rain}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wind">
+          <th mat-header-cell *matHeaderCellDef>wind</th>
+          <td mat-cell *matCellDef="let element">{{element.wind_dir}}{{element.wind_kph}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+              <table class="detail-table">
+                <br />
+                <tr>
+                  <th>Feels Like</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+
+                <tr>
+                  <td>{{ element.feelslike_c }}℃</td>
+                  <td>{{ element.wind_dir }} {{ element.wind_kph }} km/h</td>
+                  <td>{{ element.humidity }}%</td>
+                </tr>
+                <tr>
+                  <th>UV Index</th>
+                  <th>Colud Cover</th>
+                  <th>Rain Amound</th>
+                </tr>
+                <tr>
+                  <td>{{ element.uv }} of 10</td>
+                  <td>{{ element.cloud }}%</td>
+                  <td>{{ element.will_it_rain }} cm</td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+          [class.example-expanded-row]="element.expanded" (click)="toggleRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+        </tr>
+
+
+      </table>
+    </div>
+
+  </mat-tab>
+
+
+
+  <mat-tab label="Day 3">
+    <mat-toolbar class="topmenu" style="border-radius: 10px 10px 0px 0px;">
+      <mat-toolbar-row>
+        <span class="date">
+          <h2 style="margin-top: 15px; font-weight: 600; font-size: larger;   ">
+            Hourly Weather</h2>
+           <span style="font-weight: 400; font-size: medium;padding-top: 20px;"> - {{this.location}}, {{this.region}}</span> 
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+    <mat-toolbar class="topmenu">
+      <span class="date">
+        {{this.dataSource33 | json |date}}
+
+      </span>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+
+    <div class="row">
+      <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 align">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Date/time</th>
+          <td mat-cell *matCellDef="let element">{{element.time }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="temperature">
+          <th mat-header-cell *matHeaderCellDef>Temperature</th>
+          <td mat-cell *matCellDef="let element">{{element.temp_c}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>Sunny/Cloudy</th>
+          <td mat-cell *matCellDef="let element">
+            <div style="display: inline-flex; ">
+              <img [src]="element.condition.icon"><span style="padding-top: 22px ;">{{element.condition.text}}</span>
+              </div>
+        </ng-container>
+
+        <ng-container matColumnDef="rain">
+          <th mat-header-cell *matHeaderCellDef>rain</th>
+          <td mat-cell *matCellDef="let element">{{element.chance_of_rain}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wind">
+          <th mat-header-cell *matHeaderCellDef>wind</th>
+          <td mat-cell *matCellDef="let element">{{element.wind_dir}}{{element.wind_kph}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+              <table class="detail-table">
+                <br />
+                <tr>
+                  <th>Feels Like</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+
+                <tr>
+                  <td>{{ element.feelslike_c }}℃</td>
+                  <td>{{ element.wind_dir }} {{ element.wind_kph }} km/h</td>
+                  <td>{{ element.humidity }}%</td>
+                </tr>
+                <tr>
+                  <th>UV Index</th>
+                  <th>Colud Cover</th>
+                  <th>Rain Amound</th>
+                </tr>
+                <tr>
+                  <td>{{ element.uv }} of 10</td>
+                  <td>{{ element.cloud }}%</td>
+                  <td>{{ element.will_it_rain }} cm</td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+          [class.example-expanded-row]="element.expanded" (click)="toggleRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+        </tr>
+
+
+
+
+      </table>
+    </div>
+  </mat-tab>
+
+
+
+  <mat-tab label="Day 4">
+    <mat-toolbar class="topmenu" style="border-radius: 10px 10px 0px 0px;">
+      <mat-toolbar-row>
+        <span class="date">
+          <h2 style="margin-top: 15px; font-weight: 600; font-size: larger;   ">
+            Hourly Weather</h2>
+           <span style="font-weight: 400; font-size: medium;padding-top: 20px;"> - {{this.location}}, {{this.region}}</span> 
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+    <mat-toolbar class="topmenu">
+      <span class="date">
+        {{this.dataSource44 | json |date}}
+
+      </span>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+
+    <div class="row">
+      <table mat-table [dataSource]="dataSource4" multiTemplateDataRows class="mat-elevation-z8 align">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Date/Time</th>
+          <td mat-cell *matCellDef="let element">{{element.time }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="temperature">
+          <th mat-header-cell *matHeaderCellDef>Temperature</th>
+          <td mat-cell *matCellDef="let element">{{element.temp_c}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>Sunny/Cloudy</th>
+          <td mat-cell *matCellDef="let element">
+            <img [src]="element.condition.icon"> 
+            <div style="display: inline-flex; ">
+              <img [src]="element.condition.icon"><span style="padding-top: 22px ;">{{element.condition.text}}</span>
+              </div>
+        </ng-container>
+
+        <ng-container matColumnDef="rain">
+          <th mat-header-cell *matHeaderCellDef>rain</th>
+          <td mat-cell *matCellDef="let element">{{element.chance_of_rain}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wind">
+          <th mat-header-cell *matHeaderCellDef>wind</th>
+          <td mat-cell *matCellDef="let element">{{element.wind_kph}}</td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+              <table class="detail-table">
+                <br />
+                <tr>
+                  <th>Feels Like</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+
+                <tr>
+                  <td>{{ element.feelslike_c }}℃</td>
+                  <td>{{ element.wind_dir }} {{ element.wind_kph }} km/h</td>
+                  <td>{{ element.humidity }}%</td>
+                </tr>
+                <tr>
+                  <th>UV Index</th>
+                  <th>Colud Cover</th>
+                  <th>Rain Amound</th>
+                </tr>
+                <tr>
+                  <td>{{ element.uv }} of 10</td>
+                  <td>{{ element.cloud }}%</td>
+                  <td>{{ element.will_it_rain }} cm</td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+          [class.example-expanded-row]="element.expanded" (click)="toggleRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+        </tr>
+
+
+      </table>
+    </div>
+  </mat-tab>
+
+
+
+  <mat-tab label="Day 5">
+    <mat-toolbar class="topmenu" style="border-radius: 10px 10px 0px 0px;">
+      <mat-toolbar-row>
+        <span class="date">
+          <h2 style="margin-top: 15px; font-weight: 600; font-size: larger;   ">
+            Hourly Weather</h2>
+           <span style="font-weight: 400; font-size: medium;padding-top: 20px;"> - {{this.location}}, {{this.region}}</span> 
+        </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+    <mat-toolbar class="topmenu">
+      <span class="date">
+        {{this.dataSource55 | json |date}}
+
+      </span>
+    </mat-toolbar>
+    <hr style="width: 80%; margin: auto;">
+
+    <div class="row">
+      <table mat-table [dataSource]="dataSource5" multiTemplateDataRows class="mat-elevation-z8 align">
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef>Date/Time</th>
+          <td mat-cell *matCellDef="let element">{{element.time }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="temperature">
+          <th mat-header-cell *matHeaderCellDef>Temperature</th>
+          <td mat-cell *matCellDef="let element">{{element.temp_c}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef>Sunny/Cloudy</th>
+          <td mat-cell *matCellDef="let element">
+            <div style="display: inline-flex; ">
+              <img [src]="element.condition.icon"><span style="padding-top: 22px ;">{{element.condition.text}}</span>
+              </div>        </ng-container>
+
+        <ng-container matColumnDef="rain">
+          <th mat-header-cell *matHeaderCellDef>rain</th>
+          <td mat-cell *matCellDef="let element">{{element.chance_of_rain}}%</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wind">
+          <th mat-header-cell *matHeaderCellDef>wind</th>
+          <td mat-cell *matCellDef="let element">{{element.wind_dir}}{{element.wind_kph}}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+              <table class="detail-table">
+                <br />
+                <tr>
+                  <th>Feels Like</th>
+                  <th>Wind</th>
+                  <th>Humidity</th>
+                </tr>
+
+                <tr>
+                  <td>{{ element.feelslike_c }}℃</td>
+                  <td>{{ element.wind_dir }} {{ element.wind_kph }} km/h</td>
+                  <td>{{ element.humidity }}%</td>
+                </tr>
+                <tr>
+                  <th>UV Index</th>
+                  <th>Colud Cover</th>
+                  <th>Rain Amound</th>
+                </tr>
+                <tr>
+                  <td>{{ element.uv }} of 10</td>
+                  <td>{{ element.cloud }}%</td>
+                  <td>{{ element.will_it_rain }} cm</td>
+                </tr>
+              </table>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+          [class.example-expanded-row]="element.expanded" (click)="toggleRow(element)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+        </tr>
+
+
+      </table>
+    </div>
+  </mat-tab>
+</mat-tab-group>
